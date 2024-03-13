@@ -82,7 +82,8 @@ paket-files/
 
 # Exclude real appsettings but not samples
 **/appsettings*.json
-!**/appsettings*.Development.json
+**/appsettings*.Development.json
+!**/appsettings*.Development.json.sample
 
 
 # Rider

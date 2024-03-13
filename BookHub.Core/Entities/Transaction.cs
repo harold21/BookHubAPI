@@ -3,11 +3,11 @@
 public class Transaction
 {
     public int Id { get; set; }
-    public int UserId { get; set; }
-    public User User { get; set; }
-    public int BookId { get; set; }
-    public Book Book { get; set; }
-    public int Quantity { get; set; }
+    public required int UserId { get; set; }
+    public User? User { get; set; }
+    public required int BookId { get; set; }
+    public Book? Book { get; set; }
+    public required int Quantity { get; set; }
     public DateTime TransactionDate { get; set; }
-    public bool IsPurchase { get; set; } // True for buy, false for sell
+    public required bool IsPurchase { get; set; } // True for buy, false for sell
 }
