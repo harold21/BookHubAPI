@@ -3,17 +3,18 @@ using System.Security.Claims;
 using System.Text;
 using BookHub.Core.Entities;
 using BookHub.Core.Interfaces;
-using Microsoft.Extensions.Configuration;
+using BookHub.Identity.Interfaces;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
 
-namespace BookHub.Services;
+namespace BookHub.Identity.Services;
 
-public class AuthService : IAuthService
+public class IdentityService : IIdentityService
 {
     private readonly IUserRepository _userRepository;
     private readonly IConfiguration _configuration;
 
-    public AuthService(IUserRepository userRepository, IConfiguration configuration)
+    public IdentityService(IUserRepository userRepository, IConfiguration configuration)
     {
         _userRepository = userRepository;
         _configuration = configuration;

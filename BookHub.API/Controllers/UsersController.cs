@@ -3,25 +3,26 @@ using BookHub.Core.Entities;
 using BookHub.Core.Interfaces;
 using BookHub.API.DTOs;
 using Microsoft.AspNetCore.Authorization;
+using BookHub.Identity.Interfaces;
 
 namespace BookHub.API.Controllers;
 
-[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class UsersController : ControllerBase
 {
     private readonly IUserService _userService;
-    private readonly IAuthService _authService;
+    private readonly IIdentityService _identityService;
 
-    public UsersController(IUserService userService, IAuthService authService)
+    public UsersController(IUserService userService, IIdentityService identityService)
     {
         _userService = userService;
-        _authService = authService;
+        _identityService = identityService;
     }
 
     // GET: /users
     [HttpGet]
+    [Authorize]
     public async Task<ActionResult<IEnumerable<User>>> GetUsers()
     {
         var users = await _userService.GetAllUsersAsync();
@@ -39,6 +40,7 @@ public class UsersController : ControllerBase
 
     // GET: /users/{id}
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<ActionResult<User>> GetUserById(int id)
     {
         var user = await _userService.GetUserByIdAsync(id);
@@ -83,6 +85,7 @@ public class UsersController : ControllerBase
 
     // PUT: /users/{id}
     [HttpPut("{id}")]
+    [Authorize]
     public async Task<IActionResult> UpdateUser(int id, [FromBody] User user)
     {
         if (id != user.Id)
@@ -102,6 +105,7 @@ public class UsersController : ControllerBase
 
     // DELETE: /users/{id}
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteUser(int id)
     {
         var user = await _userService.GetUserByIdAsync(id);
@@ -119,14 +123,14 @@ public class UsersController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult> Login([FromBody] LoginDto loginDto)
     {
-        var user = await _authService.AuthenticateUserAsync(loginDto.Username, loginDto.Password);
+        var user = await _identityService.AuthenticateUserAsync(loginDto.Username, loginDto.Password);
         
         if (user == null)
         {
             return Unauthorized();
         }
 
-        var tokenString = _authService.GenerateJwtToken(user);
+        var tokenString = _identityService.GenerateJwtToken(user);
 
         Response.Headers.Append("Authorization", $"Bearer {tokenString}");
 

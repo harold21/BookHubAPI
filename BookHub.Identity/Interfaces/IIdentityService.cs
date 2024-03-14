@@ -1,8 +1,9 @@
+
 using BookHub.Core.Entities;
 
-namespace BookHub.Core.Interfaces;
+namespace BookHub.Identity.Interfaces;
 
-public interface IAuthService
+public interface IIdentityService
 {
     Task<User?> AuthenticateUserAsync(string username, string password);
     string GenerateJwtToken(User user);

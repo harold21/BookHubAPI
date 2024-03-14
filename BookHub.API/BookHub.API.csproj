@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BookHub.Infrastructure\BookHub.Infrastructure.csproj" />
     <ProjectReference Include="..\BookHub.Services\BookHub.Services.csproj" />
+    <ProjectReference Include="..\BookHub.Identity\BookHub.Identity.csproj" />
   </ItemGroup>
 
 </Project>
