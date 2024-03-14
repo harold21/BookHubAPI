@@ -1,18 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 using BookHub.Core.Entities;
 using BookHub.Core.Interfaces;
+using BookHub.API.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookHub.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class UsersController : ControllerBase
 {
     private readonly IUserService _userService;
+    private readonly IAuthService _authService;
 
-    public UsersController(IUserService userService)
+    public UsersController(IUserService userService, IAuthService authService)
     {
         _userService = userService;
+        _authService = authService;
     }
 
     // GET: /users
@@ -21,7 +26,15 @@ public class UsersController : ControllerBase
     {
         var users = await _userService.GetAllUsersAsync();
 
-        return Ok(users);
+        var userDtos = users.Select(user => new UserResponseDto
+        {
+            Id = user.Id,
+            Name = user.Name,
+            Username = user.Username,
+            Role = user.Role
+        });
+
+        return Ok(userDtos);
     }
 
     // GET: /users/{id}
@@ -35,21 +48,37 @@ public class UsersController : ControllerBase
             return NotFound();
         }
 
-        return Ok(user);
+        var userRespnse = new UserResponseDto
+        {
+            Id = user.Id,
+            Name = user.Name,
+            Username = user.Username,
+            Role = user.Role
+        };
+
+        return Ok(userRespnse);
     }
 
     // POST: /users
     [HttpPost]
-    public async Task<ActionResult<User>> CreateUser([FromBody] User user)
+    public async Task<ActionResult<User>> CreateUser([FromBody] CreateUserDto userDto)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        var createdUser = await _userService.CreateUserAsync(user);
+        var createdUser = await _userService.CreateUserAsync(new User {Name = userDto.Name, Username = userDto.Username, PasswordHash = userDto.Password});
 
-        return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
+        var userRespnse = new UserResponseDto
+        {
+            Id = createdUser.Id,
+            Name = createdUser.Name,
+            Username = createdUser.Username,
+            Role = createdUser.Role
+        };
+
+        return CreatedAtAction(nameof(GetUserById), new { id = userRespnse.Id }, userRespnse);
     }
 
     // PUT: /users/{id}
@@ -85,5 +114,30 @@ public class UsersController : ControllerBase
         await _userService.DeleteUserAsync(id);
 
         return NoContent();
+    }
+
+    [HttpPost("login")]
+    public async Task<ActionResult> Login([FromBody] LoginDto loginDto)
+    {
+        var user = await _authService.AuthenticateUserAsync(loginDto.Username, loginDto.Password);
+        
+        if (user == null)
+        {
+            return Unauthorized();
+        }
+
+        var tokenString = _authService.GenerateJwtToken(user);
+
+        Response.Headers.Append("Authorization", $"Bearer {tokenString}");
+
+        var userResponse = new UserResponseDto
+        {
+            Id = user.Id,
+            Name = user.Name,
+            Username = user.Username,
+            Role = user.Role
+        };
+
+        return Ok(new { Token = tokenString, User = userResponse });
     }
 }

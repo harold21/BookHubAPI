@@ -6,10 +6,12 @@ namespace BookHub.Services;
 public class UserService : IUserService
 {
     public readonly IUserRepository _userRepository;
+    public readonly IAuthService _authService;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, IAuthService authService)
     {
         _userRepository = userRepository;
+        _authService = authService;
     }
 
     public async Task<IEnumerable<User>> GetAllUsersAsync()
@@ -24,6 +26,8 @@ public class UserService : IUserService
 
     public async Task<User> CreateUserAsync(User user)
     {
+        user.PasswordHash = _authService.HashPassword(user.PasswordHash);
+        
         await _userRepository.AddAsync(user);
         
         return user;

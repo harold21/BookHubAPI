@@ -4,9 +4,11 @@ using BookHub.Core.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BookHub.API.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookHub.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class TransactionsController : ControllerBase

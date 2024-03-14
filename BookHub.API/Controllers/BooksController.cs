@@ -3,9 +3,11 @@ using BookHub.Core.Entities;
 using BookHub.Core.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookHub.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class BooksController : ControllerBase
@@ -75,6 +77,7 @@ public class BooksController : ControllerBase
 
     // DELETE: /books/{id}
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteBook(int id)
     {
         var book = await _bookService.GetBookByIdAsync(id);
