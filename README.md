@@ -13,7 +13,7 @@ BookHub API is a RESTful web service designed to manage a book store's core oper
 
 ### Prerequisites
 
-- .NET 6 SDK
+- .NET 8 SDK
 - Visual Studio 2022 or later / Visual Studio Code
 - MySQL Server
 - Docker (optional, for running MySQL in a container)
