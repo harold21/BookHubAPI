@@ -10,4 +10,5 @@ public interface IUserRepository
     Task AddAsync(User user);
     Task UpdateAsync(User user);
     Task DeleteAsync(int id);
+    Task<bool> ExistsByUsernameAsync(string username);
 }

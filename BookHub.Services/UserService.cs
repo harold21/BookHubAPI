@@ -27,6 +27,13 @@ public class UserService : IUserService
 
     public async Task<User> CreateUserAsync(User user)
     {
+        var usernameExists = await _userRepository.ExistsByUsernameAsync(user.Username);
+
+        if (usernameExists)
+        {
+            throw new InvalidOperationException($"Username {user.Username} is alreday taken.");
+        }
+
         user.PasswordHash = _identityService.HashPassword(user.PasswordHash);
         
         await _userRepository.AddAsync(user);
