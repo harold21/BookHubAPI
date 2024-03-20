@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookHub.Common", "BookHub.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookHub.Identity", "BookHub.Identity\BookHub.Identity.csproj", "{B2F56FBC-0DF5-47F0-A60E-886FF0275AC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookHub.API.Tests", "BookHub.API.Tests\BookHub.API.Tests.csproj", "{A483CBAF-D257-4C02-BEA2-5CC0A2360EA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,6 +99,18 @@ Global
 		{B2F56FBC-0DF5-47F0-A60E-886FF0275AC0}.Release|x64.Build.0 = Release|Any CPU
 		{B2F56FBC-0DF5-47F0-A60E-886FF0275AC0}.Release|x86.ActiveCfg = Release|Any CPU
 		{B2F56FBC-0DF5-47F0-A60E-886FF0275AC0}.Release|x86.Build.0 = Release|Any CPU
+		{A483CBAF-D257-4C02-BEA2-5CC0A2360EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A483CBAF-D257-4C02-BEA2-5CC0A2360EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A483CBAF-D257-4C02-BEA2-5CC0A2360EA7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A483CBAF-D257-4C02-BEA2-5CC0A2360EA7}.Debug|x64.Build.0 = Debug|Any CPU
+		{A483CBAF-D257-4C02-BEA2-5CC0A2360EA7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A483CBAF-D257-4C02-BEA2-5CC0A2360EA7}.Debug|x86.Build.0 = Debug|Any CPU
+		{A483CBAF-D257-4C02-BEA2-5CC0A2360EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A483CBAF-D257-4C02-BEA2-5CC0A2360EA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A483CBAF-D257-4C02-BEA2-5CC0A2360EA7}.Release|x64.ActiveCfg = Release|Any CPU
+		{A483CBAF-D257-4C02-BEA2-5CC0A2360EA7}.Release|x64.Build.0 = Release|Any CPU
+		{A483CBAF-D257-4C02-BEA2-5CC0A2360EA7}.Release|x86.ActiveCfg = Release|Any CPU
+		{A483CBAF-D257-4C02-BEA2-5CC0A2360EA7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
